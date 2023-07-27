@@ -1,0 +1,43 @@
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+    background: var(--maincolor);
+    padding: 10px;
+}
+header h1 {
+    text-transform: uppercase;
+    color: var(--light);
+}
+header ul  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 1rem;
+    cursor: pointer;
+    width: 50%;
+    list-style: none;
+}
+header ul li {
+    color: var(--light);
+    text-transform: uppercase;
+    font-size: 20px;
+}
+header div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    color: var(--light);
+}
+header div img {
+    width: 20px;
+    filter: invert();
+}
+
+.text{
+    text-decoration: none;
+    color: #ffff;
+}

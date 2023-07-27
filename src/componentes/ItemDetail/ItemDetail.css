@@ -1,0 +1,71 @@
+.contador {
+    display: flex;
+    width: 100%;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.contador button {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .1s;
+    border-radius: 5px;
+
+}
+
+.contador strong {
+    font-size: 1.5rem;
+}
+
+.contador button:hover {
+    background-color: #fff;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100vh;
+    max-height: 100%;
+}
+
+.contDetalle {
+    background-color: #eeee;
+    border-radius: 10px;
+    width: 90%;
+    padding: 1rem;
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.imgDetalle {
+    border-radius: 10px;
+    width: 30%;
+}
+
+.bDetalle {
+    background-color: #a12fbe;
+    color: #eeee;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 1.2rem;
+    width: 200px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+    padding: 10px;
+    transition: .1s;
+}
+
+.bDetalle:hover {
+    background-color: #762fbe;
+}

@@ -40,6 +40,3 @@ Ver carrito
 Realizar orden 
 
 <br>
-Firebase 📄
-En la carpeta Services/firebase.js se encuentra toda la lógica con la que se desarrollaron las funciones para que aparezcan todos los productos, el producto seleccionado por el usuario, y también la función para crear una orden de compra con los datos del usuario y los productos que fueron comprados.
-<br>

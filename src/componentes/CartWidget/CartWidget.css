@@ -1,0 +1,77 @@
+.imgCarrito {
+    width: 20px;
+}
+
+.cart a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.cart strong {
+    font-size: 20px;
+    color: #ffff;
+}
+
+.cart-stock {
+    display: flex;
+    min-width: 800px;
+    max-width: 90%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 2px solid #191919;
+    border-radius: 5px;
+}
+
+.cart-stock img {
+    width: 100px;
+}
+
+
+.cart-stock button, .cart-container button {
+    background-color: #a12fbe;
+    color: #eeee;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+    padding: 10px;
+    transition: .1s;
+}
+
+.cart-stock button:hover, .cart-container button:hover {
+    background-color: #762fbe;
+}
+
+.cart-container {
+    display: grid;
+    place-content: center;
+    padding: 30px;
+    gap: 30px;
+    min-height: 90vh;
+    max-height: 100%;
+}
+
+.cart-container h3 {
+    padding: 10px;
+}
+
+.cart-container a {
+    text-align: center;
+}
+
+.empty {
+    min-height: 100vh;
+    max-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
