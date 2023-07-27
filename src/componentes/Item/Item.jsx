@@ -9,9 +9,10 @@ const Item = ({id ,nombre ,precio ,img, stock}) => {
       <h3>Nombre:{nombre}</h3>
       <p>Precio ${precio} </p>
       <p>ID {id} </p>
-      <p>Stock{stock} </p>
       <Link to={`/Item/${id}`} className='btnServ'> Ver Detalles </Link>
-    </div>
+     
+    <p>Cupos del mes : {stock} </p>
+    </div> 
   )
 }
 

@@ -31,7 +31,7 @@ const ItemDetail = ({ id, nombre, precio, img, stock }) => {
         <p className='pDetalle'>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas praesentium ratione animi voluptate iure magnam debitis amet voluptatum nihil illum accusantium sequi eos vero beatae id magni, tempore deserunt? Quisquam?
         </p>
-        <p>Stock{stock} </p>       
+        <p>Cupos del mes : {stock} </p>   
         {
           //Acá empleamos la lógica del montaje y desmontaje de componentes. 
         }
