@@ -60,7 +60,7 @@ const Checkout = () => {
                 return batch.commit();
             })
             .then(() => {
-                console.log('Actualización de inventario exitosa.'  );
+                console.log('Actualización de inventario exitosa.');
             })
             .catch(error => {
                 console.error('Error al actualizar el inventario:', error);
