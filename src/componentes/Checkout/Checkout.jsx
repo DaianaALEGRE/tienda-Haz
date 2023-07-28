@@ -44,11 +44,11 @@ const Checkout = () => {
 
             const promesa = getDoc(doc(db, 'Inventario', prod.item.id)).then(productDocument => {
                 if (productDocument.data().stock >= nuevaOrden.items[i].cantidad) {
-                    batch.update(doc(db, 'Inventario', productDocument.data().idCat), {
+                    batch.update(doc(db, 'Inventario', productDocument.id), {
                         stock: productDocument.data().stock - nuevaOrden.items[i].cantidad
                     });
                 } else {
-                    outOfStock.push({ ...productDocument.data(), id: productDocument.idCat });
+                    outOfStock.push({ ...productDocument.data(), id: productDocument.id});
                 }
             });
 
