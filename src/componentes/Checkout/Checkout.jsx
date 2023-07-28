@@ -2,17 +2,17 @@ import { useContext, useState } from "react";
 import { CarritoContext } from "../../Context/CarritoContext";
 import { collection, addDoc, getDoc, doc, Timestamp, writeBatch } from 'firebase/firestore'
 import { db } from "../../services/config";
-import { Link } from "react-router-dom";
 import Swal from 'sweetalert2';
-
+import { useNavigate } from 'react-router-dom';
 import './Check.css';
 
 
-
 const Checkout = () => {
-    const { cantidadTotal, carrito, vaciarCarrito, total } = useContext(CarritoContext);
+    const { carrito, vaciarCarrito, total } = useContext(CarritoContext);
 
     const [procesandoOrden, setProcesandoOrden] = useState(false);
+
+    const navigate = useNavigate();
 
     const [comprador, setComprador] = useState({
         nombre: '',
@@ -34,46 +34,55 @@ const Checkout = () => {
 
         setProcesandoOrden(true);
 
+
         const batch = writeBatch(db);
 
+        const promesas = [];
         const outOfStock = [];
 
-        console.log(carrito)
         nuevaOrden.items.forEach((prod, i) => {
-            console.log('prod.item.id:', prod.item.id);
-            console.log('db:', db);
-            getDoc(doc(db, 'Inventario', prod.item.id)).then(productDocument => {
-                if (productDocument.data().stock >= nuevaOrden.items[i].stock) {
-                    batch.update(doc(db, 'Inventario', productDocument.idCat), {
-                        stock: productDocument.data().stock - nuevaOrden.items[i].stock
-                    })
-                } else {
-                    outOfStock.push({ ...productDocument.data(), id: productDocument.idCat })
-                }
 
+            const promesa = getDoc(doc(db, 'Inventario', prod.item.id)).then(productDocument => {
+                if (productDocument.data().stock >= nuevaOrden.items[i].cantidad) {
+                    batch.update(doc(db, 'Inventario', productDocument.data().idCat), {
+                        stock: productDocument.data().stock - nuevaOrden.items[i].cantidad
+                    });
+                } else {
+                    outOfStock.push({ ...productDocument.data(), id: productDocument.idCat });
+                }
+            });
+
+            promesas.push(promesa);
+        });
+
+        Promise.all(promesas)
+            .then(() => {
+                return batch.commit();
             })
-        })
+            .then(() => {
+                console.log('Actualización de inventario exitosa.'  );
+            })
+            .catch(error => {
+                console.error('Error al actualizar el inventario:', error);
+            });
+
 
         if (outOfStock.length === 0) {
             addDoc(collection(db, 'orders'), nuevaOrden)
                 .then((res) => {
-                    batch.commit()
-                        .then(() => {
-                            console.log(nuevaOrden)
-                            Swal.fire({
-                                icon: 'success',
-                                title: `¡Feliciades! ${nuevaOrden.buyer.nombre} ${nuevaOrden.buyer.apellido} `,
-                                text: 'Tu orden se genero con exito.',
-                                html:
-                                    '<h3>Usted compro: </h3> ' +
-                                    `<h4>${nuevaOrden.items[0].item.nombre}</h4>` +
-                                    `<b>Total: $${nuevaOrden.total}</b>` +
-                                    `<p>Su orden de compra es <b>${res._key.path.segments[1]}</b></p>`,
-                            })
-                        })
-
-
-                }).catch((error) => {
+                    console.log(nuevaOrden);
+                    Swal.fire({
+                        icon: 'success',
+                        title: `¡Feliciades! ${nuevaOrden.buyer.nombre} ${nuevaOrden.buyer.apellido} `,
+                        text: 'Tu orden se generó con éxito.',
+                        html:
+                            '<h3>Usted compró: </h3> ' +
+                            `<h4>${nuevaOrden.items[0].item.nombre}</h4>` +
+                            `<b>Total: $${nuevaOrden.total}</b>` +
+                            `<p>Su orden de compra es <b>${res._key.path.segments[1]}</b></p>`,
+                    });
+                })
+                .catch((error) => {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
@@ -81,12 +90,16 @@ const Checkout = () => {
                     })
 
                     console.log('error', error)
-
-                }).finally(() => {
+                })
+                .finally(() => {
                     setProcesandoOrden(false)
                     vaciarCarrito()
-                })
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 2000)
+                });
         }
+
     }
 
 
@@ -104,7 +117,7 @@ const Checkout = () => {
 
     return (
         <>
-        <div className="check-section fade">
+            <div className="check-section">
                 <div className="check">
                     <h1 className="check-titulo">Datos del comprador</h1>
                     <hr />
